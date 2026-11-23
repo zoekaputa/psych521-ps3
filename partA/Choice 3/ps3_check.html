@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zoe Kaputa">
+<meta name="dcterms.date" content="2026-11-23">
+
+<title>Reproducibility check: de la Fuente et al.&nbsp;(2014), Experiment 2</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="ps3_check_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ps3_check_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="ps3_check_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="ps3_check_files/libs/quarto-html/popper.min.js"></script>
+<script src="ps3_check_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ps3_check_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ps3_check_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ps3_check_files/libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ps3_check_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ps3_check_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ps3_check_files/libs/bootstrap/bootstrap-917079515d91bccb85b543faf8aa8bb6.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#article" id="toc-article" class="nav-link active" data-scroll-target="#article">Article</a></li>
+  <li><a href="#target-outcomes" id="toc-target-outcomes" class="nav-link" data-scroll-target="#target-outcomes">Target outcomes</a></li>
+  <li><a href="#materials-inventory" id="toc-materials-inventory" class="nav-link" data-scroll-target="#materials-inventory">Materials inventory</a></li>
+  <li><a href="#reproduction" id="toc-reproduction" class="nav-link" data-scroll-target="#reproduction">Reproduction</a>
+  <ul class="collapse">
+  <li><a href="#descriptives-and-figure-2" id="toc-descriptives-and-figure-2" class="nav-link" data-scroll-target="#descriptives-and-figure-2">Descriptives and Figure 2</a></li>
+  <li><a href="#summary-of-the-reproduction-agents-claim" id="toc-summary-of-the-reproduction-agents-claim" class="nav-link" data-scroll-target="#summary-of-the-reproduction-agents-claim">Summary of the reproduction (agent’s claim)</a></li>
+  </ul></li>
+  <li><a href="#checkers-verdict" id="toc-checkers-verdict" class="nav-link" data-scroll-target="#checkers-verdict">Checker’s verdict</a></li>
+  <li><a href="#time" id="toc-time" class="nav-link" data-scroll-target="#time">Time</a></li>
+  <li><a href="#assessment" id="toc-assessment" class="nav-link" data-scroll-target="#assessment">Assessment</a></li>
+  <li><a href="#ai-documentation" id="toc-ai-documentation" class="nav-link" data-scroll-target="#ai-documentation">AI documentation</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Reproducibility check: de la Fuente et al.&nbsp;(2014), Experiment 2</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zoe Kaputa </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 23, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="article" class="level2">
+<h2 class="anchored" data-anchor-id="article">Article</h2>
+<ul>
+<li>Citation and DOI: de la Fuente, J., Santiago, J., Román, A., Dumitrache, C., &amp; Casasanto, D. (2014). When you think about it, your past is in front of you: How culture shapes spatial conceptions of time. <em>Psychological Science, 25</em>(9), 1682–1690. https://doi.org/10.1177/0956797614534695</li>
+<li>Data/materials repository URL: https://osf.io/uh3in (Open Data badge)</li>
+<li>Part A (known case) or Part B (a classmate’s project paper): Part A (Group B, Choice 3)</li>
+<li>Part B only: the classmate’s project repo, and which target outcome is its key effect: N/A</li>
+</ul>
+</section>
+<section id="target-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="target-outcomes">Target outcomes</h2>
+<p>Written <strong>before</strong> opening the data. Quoted from the Results section of Experiment 2 (p.&nbsp;1685):</p>
+<blockquote class="blockquote">
+<p>According to a mixed analysis of variance (ANOVA) with group (Spanish vs.&nbsp;Moroccan) as a between-subjects factor and temporal focus (past vs.&nbsp;future) as a within-subjects factor, temporal focus differed significantly between Spaniards and Moroccans, as indicated by a significant interaction of temporal focus and group, F(1, 78) = 19.12, p = .001, ηp2 = .20 (Fig. 2). Moroccans showed greater agreement with past-focused statements than Spaniards did, t(78) = 4.04, p = .001, and Spaniards showed greater agreement with future-focused statements than Moroccans did, t(78) = −3.32, p = .001.</p>
+</blockquote>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Target outcome (quoted)</th>
+<th>Paper value(s)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>“a significant interaction of temporal focus and group”</td>
+<td>F(1, 78) = 19.12, p = .001, ηp² = .20</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>“Moroccans showed greater agreement with past-focused statements than Spaniards did”</td>
+<td>t(78) = 4.04, p = .001</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>“Spaniards showed greater agreement with future-focused statements than Moroccans did”</td>
+<td>t(78) = −3.32, p = .001</td>
+</tr>
+</tbody>
+</table>
+<p>Fig. 2 (cell means ± SE, read off the bar chart): Spaniards past ≈ 2.68, future ≈ 3.49; Moroccans past ≈ 3.30, future ≈ 3.13.</p>
+</section>
+<section id="materials-inventory" class="level2">
+<h2 class="anchored" data-anchor-id="materials-inventory">Materials inventory</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Available?</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Raw data</td>
+<td>Yes</td>
+<td>Item-level responses, sheet <code>TFQ Exp2</code>, in three versions of the <code>.xls</code> file: the original OSF upload (<code>DeLaFuenteEtAl_2014_RawData.xls</code>), an author-corrected version (<code>-OSF-corrected.xls</code>, after Tom Hardwicke flagged df mismatches in 2018), and a further edited version (<code>-OSF-corrected_EHedit.xls</code>).</td>
+</tr>
+<tr class="even">
+<td>Processed data</td>
+<td>No</td>
+<td>No participant-level means for Exp. 2 (they exist for Exp. 4 only).</td>
+</tr>
+<tr class="odd">
+<td>Codebook / variable descriptions</td>
+<td>Partial</td>
+<td><code>Notes</code> sheet describes the sheets; column names are self-explanatory (<code>group</code>, <code>participant</code>, <code>subscale</code>, <code>item</code>, agreement). The agreement column header says “0 = complete disagreement; 5 = complete agreement”, but observed values are 1–5, consistent with the paper’s “5-point” scale. Item wording is in Spanish; Table S1 is in the online supplement.</td>
+</tr>
+<tr class="even">
+<td>Analysis code</td>
+<td>No</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Preregistration</td>
+<td>No</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reproduction" class="level2">
+<h2 class="anchored" data-anchor-id="reproduction">Reproduction</h2>
+<p>The agent’s work, under your direction. Keep all code visible.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">original      =</span> <span class="st">"data/DeLaFuenteEtAl_2014_RawData.xls"</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">corrected     =</span> <span class="st">"data/DeLaFuenteEtAl_2014_RawData-OSF-corrected.xls"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corrected_EH  =</span> <span class="st">"data/DeLaFuenteEtAl_2014_RawData-OSF-corrected_EHedit.xls"</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>read_tfq <span class="ot">&lt;-</span> <span class="cf">function</span>(path) {</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(path, <span class="at">sheet =</span> <span class="st">"TFQ Exp2"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rename</span>(<span class="at">agree =</span> <span class="dv">5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">group =</span> <span class="fu">recode</span>(group, <span class="st">"young Spaniard"</span> <span class="ot">=</span> <span class="st">"Spaniard"</span>))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>raw <span class="ot">&lt;-</span> <span class="fu">map</span>(files, read_tfq)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Notes sheet of the corrected file explains the ID problem</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(files[<span class="st">"corrected"</span>], <span class="at">sheet =</span> <span class="st">"Notes"</span>, <span class="at">col_names =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>() <span class="sc">|&gt;</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(<span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(<span class="dv">4</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="at">sep =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>IMPORTANT NOTE: This is the file uploaded to OSF as raw data of the De la Fuente et al (2014) paper. However, in June 14th 2018, Tom Hardwicke wrote to us after trying to
+replicate our analyses, asking about some mismatches in df in the analysis of sheet TFQ Exp2.
+I checked the original data files and found that, for some reason, the subject number of participant 24 changed to 40 for some of the items of her questionnaire.
+Number 40 remained during the initial items of the questionnaire of the following participant 25. The corrected data cells are marked in yellow.</code></pre>
+</div>
+</div>
+<p>The three files have identical agreement values, items and subscale labels; they differ only in the <code>participant</code> column. In the original file, rows belonging to participants 24 and 25 were mislabelled as participant 40 in <strong>both</strong> groups. The “corrected” file fixes this for Moroccans only; the “EHedit” file fixes it for both groups.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of items attributed to each participant ID, per file (should be 21 for everyone)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(raw, \(d) d <span class="sc">|&gt;</span> <span class="fu">count</span>(group, participant) <span class="sc">|&gt;</span> <span class="fu">count</span>(<span class="at">n_items =</span> n, <span class="at">name =</span> <span class="st">"n_ids"</span>),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        <span class="at">.id =</span> <span class="st">"file"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">file</th>
+<th style="text-align: right;">n_items</th>
+<th style="text-align: right;">n_ids</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">original</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">original</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">original</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">74</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">original</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">corrected</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">corrected</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">corrected</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">77</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">corrected</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">corrected_EH</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">80</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Rows whose participant ID differs between files</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  raw<span class="sc">$</span>original <span class="sc">|&gt;</span> <span class="fu">select</span>(group, subscale, item, <span class="at">original =</span> participant),</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">corrected    =</span> raw<span class="sc">$</span>corrected<span class="sc">$</span>participant,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">corrected_EH =</span> raw<span class="sc">$</span>corrected_EH<span class="sc">$</span>participant</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(original <span class="sc">!=</span> corrected <span class="sc">|</span> original <span class="sc">!=</span> corrected_EH) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(group, original, corrected, corrected_EH) <span class="sc">|&gt;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: right;">original</th>
+<th style="text-align: right;">corrected</th>
+<th style="text-align: right;">corrected_EH</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">17</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Only <code>corrected_EH</code> yields 80 participants × 21 items (11 PAST, 10 FUTURE), matching the paper’s N = 80 and df = 78, so it is used as the primary data. The other two versions are run as a sensitivity check.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Per-participant mean agreement for each subscale</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>make_means <span class="ot">&lt;-</span> <span class="cf">function</span>(d) {</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  d <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">group_by</span>(group, participant, subscale) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarise</span>(<span class="at">rating =</span> <span class="fu">mean</span>(agree), <span class="at">n_items =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">id =</span> <span class="fu">factor</span>(<span class="fu">paste</span>(group, participant)),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>           <span class="at">group =</span> <span class="fu">factor</span>(group, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Spaniard"</span>, <span class="st">"Moroccan"</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>           <span class="at">subscale =</span> <span class="fu">factor</span>(subscale, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"PAST"</span>, <span class="st">"FUTURE"</span>)))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>means <span class="ot">&lt;-</span> <span class="fu">map</span>(raw, make_means)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> means<span class="sc">$</span>corrected_EH</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>m <span class="sc">|&gt;</span> <span class="fu">count</span>(group, subscale, n_items) <span class="sc">|&gt;</span> <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: left;">subscale</th>
+<th style="text-align: right;">n_items</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: left;">PAST</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: left;">FUTURE</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: left;">PAST</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: left;">FUTURE</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">40</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="descriptives-and-figure-2" class="level3">
+<h3 class="anchored" data-anchor-id="descriptives-and-figure-2">Descriptives and Figure 2</h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>desc <span class="ot">&lt;-</span> m <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group, subscale) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">M =</span> <span class="fu">mean</span>(rating), <span class="at">SE =</span> <span class="fu">sd</span>(rating) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()), <span class="at">n =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(desc, <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">group</th>
+<th style="text-align: left;">subscale</th>
+<th style="text-align: right;">M</th>
+<th style="text-align: right;">SE</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: left;">PAST</td>
+<td style="text-align: right;">2.675</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Spaniard</td>
+<td style="text-align: left;">FUTURE</td>
+<td style="text-align: right;">3.492</td>
+<td style="text-align: right;">0.067</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: left;">PAST</td>
+<td style="text-align: right;">3.293</td>
+<td style="text-align: right;">0.116</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Moroccan</td>
+<td style="text-align: left;">FUTURE</td>
+<td style="text-align: right;">3.120</td>
+<td style="text-align: right;">0.088</td>
+<td style="text-align: right;">40</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(desc, <span class="fu">aes</span>(group, M, <span class="at">fill =</span> subscale)) <span class="sc">+</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>), <span class="at">colour =</span> <span class="st">"black"</span>, <span class="at">width =</span> .<span class="dv">9</span>) <span class="sc">+</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> M <span class="sc">-</span> SE, <span class="at">ymax =</span> M <span class="sc">+</span> SE), <span class="at">position =</span> <span class="fu">position_dodge</span>(.<span class="dv">9</span>), <span class="at">width =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="at">PAST =</span> <span class="st">"grey55"</span>, <span class="at">FUTURE =</span> <span class="st">"grey90"</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                    <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Past-Focused Statements"</span>, <span class="st">"Future-Focused Statements"</span>)) <span class="sc">+</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">y =</span> <span class="st">"Rating"</span>, <span class="at">fill =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"top"</span>, <span class="at">legend.direction =</span> <span class="st">"vertical"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ps3_check_files/figure-html/fig2-1.png" class="img-fluid figure-img" width="480"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Original Fig. 2 for comparison:</p>
+<p><img src="fig2.png" class="img-fluid" style="width:60.0%"></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>run_tests <span class="ot">&lt;-</span> <span class="cf">function</span>(m) {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  a  <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">aov</span>(rating <span class="sc">~</span> group <span class="sc">*</span> subscale <span class="sc">+</span> <span class="fu">Error</span>(id <span class="sc">/</span> subscale), <span class="at">data =</span> m))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  w  <span class="ot">&lt;-</span> a[[<span class="st">"Error: id:subscale"</span>]][[<span class="dv">1</span>]]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  int_row <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"group:subscale"</span>, <span class="fu">rownames</span>(w))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  res_row <span class="ot">&lt;-</span> <span class="fu">grep</span>(<span class="st">"Residuals"</span>, <span class="fu">rownames</span>(w))</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  tt <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">c</span>(<span class="at">PAST =</span> <span class="st">"PAST"</span>, <span class="at">FUTURE =</span> <span class="st">"FUTURE"</span>), \(s) {</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">filter</span>(m, subscale <span class="sc">==</span> s)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Moroccan minus Spaniard, matching the sign convention in the paper</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">t.test</span>(x<span class="sc">$</span>rating[x<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"Moroccan"</span>], x<span class="sc">$</span>rating[x<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"Spaniard"</span>], <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">F_int   =</span> w[int_row, <span class="st">"F value"</span>],</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">df1     =</span> w[int_row, <span class="st">"Df"</span>],</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">df2     =</span> w[res_row, <span class="st">"Df"</span>],</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">p_int   =</span> w[int_row, <span class="st">"Pr(&gt;F)"</span>],</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">pes_int =</span> w[int_row, <span class="st">"Sum Sq"</span>] <span class="sc">/</span> (w[int_row, <span class="st">"Sum Sq"</span>] <span class="sc">+</span> w[res_row, <span class="st">"Sum Sq"</span>]),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">t_past  =</span> tt<span class="sc">$</span>PAST<span class="sc">$</span>statistic,   <span class="at">df_past =</span> tt<span class="sc">$</span>PAST<span class="sc">$</span>parameter,   <span class="at">p_past =</span> tt<span class="sc">$</span>PAST<span class="sc">$</span>p.value,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">t_fut   =</span> tt<span class="sc">$</span>FUTURE<span class="sc">$</span>statistic, <span class="at">df_fut  =</span> tt<span class="sc">$</span>FUTURE<span class="sc">$</span>parameter, <span class="at">p_fut  =</span> tt<span class="sc">$</span>FUTURE<span class="sc">$</span>p.value</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Primary analysis (fully corrected data)</span></span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>primary <span class="ot">&lt;-</span> <span class="fu">run_tests</span>(m)</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(primary, <span class="at">digits =</span> <span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 5%">
+<col style="width: 5%">
+<col style="width: 8%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 10%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">F_int</th>
+<th style="text-align: right;">df1</th>
+<th style="text-align: right;">df2</th>
+<th style="text-align: right;">p_int</th>
+<th style="text-align: right;">pes_int</th>
+<th style="text-align: right;">t_past</th>
+<th style="text-align: right;">df_past</th>
+<th style="text-align: right;">p_past</th>
+<th style="text-align: right;">t_fut</th>
+<th style="text-align: right;">df_fut</th>
+<th style="text-align: right;">p_fut</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">19.1445</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.1971</td>
+<td style="text-align: right;">4.0034</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">1e-04</td>
+<td style="text-align: right;">-3.3637</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0.0012</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Full ANOVA table for the primary analysis</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">aov</span>(rating <span class="sc">~</span> group <span class="sc">*</span> subscale <span class="sc">+</span> <span class="fu">Error</span>(id <span class="sc">/</span> subscale), <span class="at">data =</span> m))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Error: id
+          Df Sum Sq Mean Sq F value Pr(&gt;F)  
+group      1  0.604  0.6036   2.881 0.0936 .
+Residuals 78 16.341  0.2095                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Error: id:subscale
+               Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+subscale        1   4.15   4.151   8.098  0.00566 ** 
+group:subscale  1   9.81   9.815  19.145 3.71e-05 ***
+Residuals      78  39.99   0.513                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>paper <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">F_int =</span> <span class="fl">19.12</span>, <span class="at">pes_int =</span> .<span class="dv">20</span>, <span class="at">t_past =</span> <span class="fl">4.04</span>, <span class="at">t_fut =</span> <span class="sc">-</span><span class="fl">3.32</span>)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">statistic  =</span> <span class="fu">c</span>(<span class="st">"Interaction F(1, 78)"</span>, <span class="st">"Interaction partial eta^2"</span>,</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>                 <span class="st">"PAST t(78)"</span>, <span class="st">"FUTURE t(78)"</span>),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">paper      =</span> paper,</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">reproduced =</span> <span class="fu">unlist</span>(primary[<span class="fu">names</span>(paper)])</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">abs_diff =</span> reproduced <span class="sc">-</span> paper,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">pct_diff =</span> <span class="dv">100</span> <span class="sc">*</span> (reproduced <span class="sc">-</span> paper) <span class="sc">/</span> <span class="fu">abs</span>(paper)) <span class="sc">|&gt;</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">statistic</th>
+<th style="text-align: right;">paper</th>
+<th style="text-align: right;">reproduced</th>
+<th style="text-align: right;">abs_diff</th>
+<th style="text-align: right;">pct_diff</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Interaction F(1, 78)</td>
+<td style="text-align: right;">19.12</td>
+<td style="text-align: right;">19.145</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.128</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Interaction partial eta^2</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">-0.003</td>
+<td style="text-align: right;">-1.464</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">PAST t(78)</td>
+<td style="text-align: right;">4.04</td>
+<td style="text-align: right;">4.003</td>
+<td style="text-align: right;">-0.037</td>
+<td style="text-align: right;">-0.906</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">FUTURE t(78)</td>
+<td style="text-align: right;">-3.32</td>
+<td style="text-align: right;">-3.364</td>
+<td style="text-align: right;">-0.044</td>
+<td style="text-align: right;">-1.315</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Same analysis on all three versions of the data file</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">map_dfr</span>(means, run_tests, <span class="at">.id =</span> <span class="st">"file"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(file, F_int, df2, pes_int, t_past, df_past, t_fut, df_fut) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">file</th>
+<th style="text-align: right;">F_int</th>
+<th style="text-align: right;">df2</th>
+<th style="text-align: right;">pes_int</th>
+<th style="text-align: right;">t_past</th>
+<th style="text-align: right;">df_past</th>
+<th style="text-align: right;">t_fut</th>
+<th style="text-align: right;">df_fut</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">original</td>
+<td style="text-align: right;">18.346</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">0.194</td>
+<td style="text-align: right;">3.856</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">-3.210</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">corrected</td>
+<td style="text-align: right;">18.888</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">3.908</td>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">-3.441</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">corrected_EH</td>
+<td style="text-align: right;">19.145</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0.197</td>
+<td style="text-align: right;">4.003</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">-3.364</td>
+<td style="text-align: right;">78</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="summary-of-the-reproduction-agents-claim" class="level3">
+<h3 class="anchored" data-anchor-id="summary-of-the-reproduction-agents-claim">Summary of the reproduction (agent’s claim)</h3>
+<p>Using the fully corrected file (<code>EHedit</code>), all three target outcomes reproduce in direction, significance and approximate size, but not exactly:</p>
+<ul>
+<li>Interaction: F(1, 78) = 19.15 vs.&nbsp;19.12 reported; ηp² = .197 (rounds to .20, matches). Actual p ≈ 3.7 × 10⁻⁵; the paper’s “p = .001” appears to be a floor/rounding convention.</li>
+<li>PAST: t(78) = 4.00 vs.&nbsp;4.04 reported (p ≈ .0001).</li>
+<li>FUTURE: t(78) = −3.36 vs.&nbsp;−3.32 reported (p ≈ .001).</li>
+<li>Cell means match Fig. 2 to within ~0.01–0.02.</li>
+</ul>
+<p>All discrepancies are under ~1.5% of the reported value and every df matches. The original OSF file (participant-ID error) gives the wrong df (76/77) and cannot reproduce the reported df. Welch t-tests give the same t values with non-integer df, and item-level t-tests are far off, so neither explains the small residual difference. A likely cause is that the authors’ working file differed slightly from any of the three posted versions (for example, a few response values or item–participant assignments around the mislabelled participants 24/25/40). My own classification would be <strong>minor numerical errors</strong> for all three outcomes, with the conclusions unaffected.</p>
+</section>
+</section>
+<section id="checkers-verdict" class="level2">
+<h2 class="anchored" data-anchor-id="checkers-verdict">Checker’s verdict</h2>
+<p>Filled in by you, not the agent.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Paper value</th>
+<th>Reproduced value</th>
+<th>Verdict (exact / minor / major / not reproducible)</th>
+<th>Reason for discrepancy</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Interaction F(1, 78) = 19.12</td>
+<td>19.145</td>
+<td>minor</td>
+<td>Slightly different workign data files</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>PAST t(78) = 4.04</td>
+<td>4.003</td>
+<td>minor</td>
+<td>Slightly different workign data files</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>FUTURE t(78) = -3.32</td>
+<td>-3.364</td>
+<td>minor</td>
+<td>Slightly different workign data files</td>
+</tr>
+</tbody>
+</table>
+<p>Agent’s own claim about success, and whether it was right:</p>
+<p>The agent claimed it was successful in reproducing the three target outcomes in this experiment with minor numeric differences. The agent isn’t able to explain these minor differences, citing that the authors’ working data files differed slightly from the three posted versions. This is likely true. As part of this exercise, I had the agent iterate on many of the decisions it made/inferred, and none were able to explain the differences in the results.</p>
+</section>
+<section id="time" class="level2">
+<h2 class="anchored" data-anchor-id="time">Time</h2>
+<ul>
+<li>Your time (hours): 0.5 hours</li>
+<li>Agent wall-clock time (hours): 0.083 hours</li>
+<li>Stopped at the 4-hour cap? What remained: N/A</li>
+</ul>
+</section>
+<section id="assessment" class="level2">
+<h2 class="anchored" data-anchor-id="assessment">Assessment</h2>
+<p>Is the primary result analytically reproducible? What would have made this take 30 minutes?</p>
+<p>Yes, it is reproducable. This exercise took me and the agent a combined 30 minutes (there was overlap between mine and the agent’s work).</p>
+</section>
+<section id="ai-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="ai-documentation">AI documentation</h2>
+<ul>
+<li>Agent and interface (e.g., Claude Code, Codex CLI, Cursor): Claude Code (VS Code extension)</li>
+<li>Model and version, if the tool reports it: Claude Opus 5.5 (<code>claude-opus-5-5</code>)</li>
+<li>Context you gave it (files, instructions, any context file): <code>ps3/Group B/Choice 3/</code> (article.pdf, fig2.png, reproducibilityReport.Rmd, data/), <code>ps3_check_template.qmd</code>, and the instruction to reproduce the target outcomes and fill out a copy of the template, leaving the verdict to you.</li>
+<li>Number of times you intervened, and the most important intervention: 1, asking the agent to iterate on its decisions</li>
+<li>Transcript: link to the exported transcript in your repo (<code>transcripts/</code>). If your tool cannot export one, paste your prompts in order here instead.</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,860 @@
+---
+title: "Menopause Social Media Study"
+author: "Richard Brown"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Analysis script accompanying: Osborne AK, Brown RD, Sillence E. Effects of Social Media Narratives on Affective and Behavioral Responses to Menopause Content: Randomized Online Experimental Study. *JMIR Form Res* 2026;10:e85788. doi:10.2196/85788
+
+Place `Menopause_Social_Media_Study_Data.csv` in the same folder as this file and knit.
+
+```{r}
+# Rmisc attaches plyr, so it is loaded before dplyr; otherwise plyr::mutate masks
+# dplyr::mutate and ignores group_by() when calculating within-condition percentages
+library(Rmisc)
+library(dplyr)
+library(rmarkdown)
+library(psych)
+library(ggplot2)
+library(tidyr)
+library(MASS)
+library(stringr)
+```
+
+
+# Set up and clean
+```{r}
+data <- read.csv("Menopause_Social_Media_Study_Data.csv")
+
+# Remove the two Qualtrics header rows (question wording and import IDs)
+data <- data[-c(1:2), ]
+
+#convert to numeric values
+cols_to_convert <- setdiff(names(data), c("Participant_ID", "FL_21_DO"))
+data[cols_to_convert] <- lapply(data[cols_to_convert], function(x) as.numeric(as.character(x)))
+
+# Inclusion criteria: consented, completed the survey, aged 40+.
+# These were applied before the data were shared, so all 749 rows are retained here.
+# The raw Qualtrics export (n = 781) also contained 18 screen-outs, 2 consent refusals,
+# 10 incomplete/withdrawn responses (incl. 1 researcher test) and 2 participants aged
+# under 40; these, and identifying fields (Prolific IDs, Qualtrics response IDs,
+# timestamps), are not included in the shared data.
+data <- subset(data, Finished != 0 & Age >= 40)
+```
+
+```{r}
+
+data$time_taken_seconds <- data$Duration..in.seconds.
+paged_table(describe(data$time_taken_seconds))
+
+```
+
+
+
+# Potential outliers
+```{r}
+#Condition groups
+names(data)[names(data) == "FL_21_DO"] <- "Condition"
+# Set Condition as a factor (Normal = reference) here, before the per-condition descriptives below
+data$Condition <- as.factor(relevel(
+  factor(str_trim(data$Condition, side = "both")),
+  ref = "Normal"))
+table(data$Condition)
+
+
+
+#Outliers
+cat(sum(data$Education > 20, na.rm = TRUE), "participants reported more than 20 years of post-16 education.\n")
+cat(sum(data$time_taken_seconds < 150, na.rm = TRUE), "participants took under 2 1/2 minutes to complete the survey.\n")
+
+data <- data[data$Education <= 20 ,]
+data <- data[data$time_taken_seconds >= 150,]
+
+#Attention check
+
+cat("In response to the social media posts presented to each group", round((sum(data$N.Perceptions == 2, na.rm = TRUE) / sum(!is.na(data$N.Perceptions))) * 100, 2),
+  "% of participants from the 'normal' condition reported that 'The posts portray menopause as a typical, natural stage of life.'\n")
+
+cat(round((sum(data$T.Perceptions == 1, na.rm = TRUE) / sum(!is.na(data$T.Perceptions))) * 100, 2), "% of participants from the 'transformative' condition reported that 'The posts portray menopause as a significant and positive life change.'\n")
+
+cat(round((sum(data$D.Perceptions == 3, na.rm = TRUE) / sum(!is.na(data$D.Perceptions))) * 100, 2), "% of participants from the 'distressing' condition reported that 'The posts portray menopause as difficult, negative, or overwhelming.'\n")
+
+table(data$Condition
+      )
+
+
+```
+
+# Descriptive statistics
+```{r}
+#Age
+paged_table(describe(data$Age))
+paged_table(describe(data[data$Condition == "Normal",]$Age))
+paged_table(describe(data[data$Condition == "Transformative",]$Age))
+paged_table(describe(data[data$Condition == "Distress",]$Age))
+
+#Education
+paged_table(describe(data$Education))
+paged_table(describe(data[data$Condition == "Normal",]$Education))
+paged_table(describe(data[data$Condition == "Transformative",]$Education))
+paged_table(describe(data[data$Condition == "Distress",]$Education))
+
+
+#Menopause
+data$Screening_Meno_Labelled <- factor(data$Screening...Meno, levels = c(1, 2), labels = c("Perimenopause", "Post menopause"))
+
+screening_group_table <- data %>%
+  dplyr::count(Condition, Screening_Meno_Labelled) %>%
+  group_by(Condition) %>%
+  dplyr::mutate(`Percentage of Group` = round((n / sum(n)) * 100, 3)) %>%
+  ungroup()
+
+# Rename column after pipe
+colnames(screening_group_table)[3] <- "Count"
+
+paged_table(screening_group_table)
+
+
+
+
+
+#Experience of HRT
+# Label HRT.History values
+data$HRT_History_Labelled <- factor(
+  data$HRT.History,
+  levels = c(1, 2, 3),
+  labels = c("Current", "Previous", "Never")
+)
+
+# Generate grouped table
+hrt_group_table <- data %>%
+  dplyr::count(Condition, HRT_History_Labelled) %>%
+  group_by(Condition) %>%
+  dplyr::mutate(`Percentage of Group` = round((n / sum(n)) * 100, 3)) %>%
+  ungroup()
+
+# Rename column
+colnames(hrt_group_table)[3] <- "Count"
+
+paged_table(hrt_group_table)
+
+#Knowledge about menopause
+table(data$Knowledge)
+
+#Social media use
+
+social_media_table_df <- as.data.frame(table(data$Social.Media))
+colnames(social_media_table_df) <- c("Social Media Use", "Count")
+social_media_table_df <- social_media_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(social_media_table_df)
+
+social_media_table_df <- as.data.frame(table(data[data$Condition == "Normal",]$Social.Media))
+colnames(social_media_table_df) <- c("Social Media Use", "Count")
+social_media_table_df <- social_media_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(social_media_table_df)
+
+social_media_table_df <- as.data.frame(table(data[data$Condition == "Distress",]$Social.Media))
+colnames(social_media_table_df) <- c("Social Media Use", "Count")
+social_media_table_df <- social_media_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(social_media_table_df)
+
+social_media_table_df <- as.data.frame(table(data[data$Condition == "Transformative",]$Social.Media))
+colnames(social_media_table_df) <- c("Social Media Use", "Count")
+social_media_table_df <- social_media_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(social_media_table_df)
+
+
+# Knowledge
+
+knowledge_table_df <- as.data.frame(table(data$Knowledge))
+colnames(knowledge_table_df) <- c("Knowledge", "Count")
+knowledge_table_df <- knowledge_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(knowledge_table_df)
+
+knowledge_table_df <- as.data.frame(table(data[data$Condition == "Normal", ]$Knowledge))
+colnames(knowledge_table_df) <- c("Knowledge", "Count")
+knowledge_table_df <- knowledge_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(knowledge_table_df)
+
+knowledge_table_df <- as.data.frame(table(data[data$Condition == "Distress", ]$Knowledge))
+colnames(knowledge_table_df) <- c("Knowledge", "Count")
+knowledge_table_df <- knowledge_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(knowledge_table_df)
+
+knowledge_table_df <- as.data.frame(table(data[data$Condition == "Transformative", ]$Knowledge))
+colnames(knowledge_table_df) <- c("Knowledge", "Count")
+knowledge_table_df <- knowledge_table_df %>%
+  mutate(`Percentage of Sample` = round((Count / sum(Count)) * 100, 3))
+paged_table(knowledge_table_df)
+
+
+
+
+```
+
+# Tidy data
+```{r}
+data <- data %>%
+  mutate(
+    Timer_First.Click = coalesce(N.Timer_First.Click, D.Timer_First.Click, T.Timer_First.Click),
+    Timer_Last.Click = coalesce(N.Timer_Last.Click, D.Timer_Last.Click, T.Timer_Last.Click),
+    Timer_Page.Submit = coalesce(N.Timer_Page.Submit, D.Timer_Page.Submit, T.Timer_Page.Submit),
+    Timer_Click.Count = coalesce(N.Timer_Click.Count, D.Timer_Click.Count, T.Timer_Click.Count),
+    
+    Perceptions = coalesce(N.Perceptions, D.Perceptions, T.Perceptions),
+    
+    Agreements_1 = coalesce(N.Agreements_1, D.Agreements_1, T.Agreements_1),
+    Agreements_2 = coalesce(N.Agreements_2, D.Agreements_2, T.Agreements_2),
+    Agreements_3 = coalesce(N.Agreements_3, D.Agreements_3, T.Agreements_3),
+    Agreements_4 = coalesce(N.Agreements_4, D.Agreements_4, T.Agreements_4),
+    Agreements_5 = coalesce(N.Agreements_5, D.Agreements_5, T.Agreements_5),
+
+    Affective_response_1 = coalesce(N.Affective_response_1, D.Affective_response_1, T.Affective_response_1),
+    Affective_response_2 = coalesce(N.Affective_response_2, D.Affective_response_2, T.Affective_response_2),
+    Affective_response_3 = coalesce(N.Affective_response_3, D.Affective_response_3, T.Affective_response_3),
+    Affective_response_4 = coalesce(N.Affective_response_4, D.Affective_response_4, T.Affective_response_4),
+    Affective_response_5 = coalesce(N.Affective_response_5, D.Affective_response_5, T.Affective_response_5),
+    Affective_response_6 = coalesce(N.Affective_response_6, D.Affective_response_6, T.Affective_response_6),
+
+    Behaviour_response_1 = coalesce(N.Behaviour_response_1, D.Behaviour_response_1, T.Behaviour_response_1),
+    Behaviour_response_2 = coalesce(N.Behaviour_response_2, D.Behaviour_response_2, T.Behaviour_response_2),
+    Behaviour_response_3 = coalesce(N.Behaviour_response_3, D.Behaviour_response_3, T.Behaviour_response_3),
+    Behaviour_response_4 = coalesce(N.Behaviour_response_4, D.Behaviour_response_4, T.Behaviour_response_4),
+    Behaviour_response_5 = coalesce(N.Behaviour_response_5, D.Behaviour_response_5, T.Behaviour_response_5),
+
+    Discuss_posts_1 = coalesce(N.Discuss_posts_1, D.Discuss_posts_1, T.Discuss_posts_1),
+    Discuss_posts_2 = coalesce(N.Discuss_posts_2, D.Discuss_posts_2, T.Discuss_posts_2),
+
+    Representative1 = coalesce(N.Representative1, D.Representative1, T.Representative1),
+    Representative2 = coalesce(N.Representative2, D.Representative2, T.Representative2),
+    Representative3 = coalesce(N.Representative3, D.Representative3, T.Representative3)
+  )
+
+```
+
+
+# Visualisations
+#### Affective response variables
+```{r}
+#combine affective responses, also adding feeling empowered and knowledgeable (from agreement section) as affective responses 
+Affective_Responses <- data[, c("Affective_response_1","Affective_response_2","Affective_response_3","Affective_response_4", "Affective_response_5", "Affective_response_6", "Agreements_4","Agreements_5","Condition")]
+
+names(Affective_Responses)[names(Affective_Responses) == "Agreements_4"] <- "Affective_response_7"
+names(Affective_Responses)[names(Affective_Responses) == "Agreements_5"] <- "Affective_response_8"
+
+Affective_Responses_long <- pivot_longer(Affective_Responses, cols = starts_with("Affective_response_"), names_to = "Variable", values_to = "Value")
+
+Affective_Responses_means <- summarySE(data = Affective_Responses_long, measurevar = "Value", groupvars = c("Variable","Condition"), na.rm = TRUE, conf.interval = 0.95, .drop = TRUE)
+
+Affective_Responses_means$Variable <- recode(
+  Affective_Responses_means$Variable,
+  "Affective_response_1" = "Worried",
+  "Affective_response_2" = "Reassured",
+  "Affective_response_3" = "Confused",
+  "Affective_response_4" = "In control",
+  "Affective_response_5" = "Optimistic",
+  "Affective_response_6" = "Anxious",
+  "Affective_response_7" = "Empowered",
+  "Affective_response_8" = "Knowledgeable"
+)
+```
+
+```{r}
+Affective_plot <- ggplot(Affective_Responses_means) +
+  aes(x = Variable, y = Value, colour = Condition) +
+  geom_point(shape = "circle", size = 3L) +
+  geom_errorbar(
+    aes(ymin = Value - ci, ymax = Value + ci),
+    width = 0.2,
+    position = position_dodge(0.1)
+  ) +
+  scale_y_continuous(
+    position = "right",
+    limits = c(1, 5),
+    breaks = 1:5
+  ) +
+  coord_flip() +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 5, label = "Strongly\nagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 4, label = "Agree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 3, label = "Neither"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 2, label = "Disagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 1, label = "Strongly\ndisagree"), inherit.aes = FALSE, size = 3) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "top"
+  ) +
+  labs(
+    title = "Affective Response to Posts, by Condition",
+    subtitle = "After reading the posts, to what extent do you agree you feel the following about menopause?",
+    x = "Affective response",
+    y = "Participant response",
+    colour = "Condition"
+  )
+
+ggsave(
+  "Affective_plot.png",
+  plot = Affective_plot,
+  device = "png",
+  dpi = 300,
+  width = 8,
+  height = 6,
+  bg = "white"
+)
+
+Affective_plot
+```
+
+
+#### Behavioural Responses
+```{r}
+Behavioural_Responses <- data[, c("Behaviour_response_1", "Behaviour_response_2", "Behaviour_response_3", "Behaviour_response_4","Behaviour_response_5","Discuss_posts_1",     "Discuss_posts_2", "Condition")]
+
+names(Behavioural_Responses)[names(Behavioural_Responses) == "Discuss_posts_1"] <- "Behaviour_response_6"
+names(Behavioural_Responses)[names(Behavioural_Responses) == "Discuss_posts_2"] <- "Behaviour_response_7"
+
+
+
+Behavioural_Responses_long <- pivot_longer(Behavioural_Responses, cols = starts_with("Behaviour_"), names_to = "Variable", values_to = "Value")
+
+Behavioural_Responses_means <- summarySE(data = Behavioural_Responses_long, measurevar = "Value", groupvars = c("Variable","Condition"), na.rm = TRUE, conf.interval = 0.95, .drop = TRUE)
+
+Behavioural_Responses_means$Variable <- recode(
+  Behavioural_Responses_means$Variable,
+  "Behaviour_response_1" = "Like the posts",
+  "Behaviour_response_2" = "Share the posts",
+  "Behaviour_response_3" = "Save the posts",
+  "Behaviour_response_4" = "Comment",
+  "Behaviour_response_5" = "Search for similar posts",
+  "Behaviour_response_6" = "Discuss with friends or family",
+  "Behaviour_response_7" = "Discuss with health professional"
+
+)
+```
+
+```{r}
+Behavioural_plot <- ggplot(Behavioural_Responses_means) +
+  aes(x = Variable, y = Value, colour = Condition) +
+  geom_point(shape = "circle", size = 3L) +
+  geom_errorbar(
+    aes(ymin = Value - ci, ymax = Value + ci),
+    width = 0.2,
+    position = position_dodge(0.1)
+  ) +
+  scale_y_continuous(
+    position = "right",
+    limits = c(1, 5),
+    breaks = 1:5
+  ) +
+  coord_flip() +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 5, label = "Extremely\nlikely"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.4, y = 4, label = "Somewhat\nlikely"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.4, y = 3, label = "Neither"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.4, y = 2, label = "Somewhat\nunlikely"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 1, label = "Extremely\nunlikely"), inherit.aes = FALSE, size = 3) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "white", colour = NA),
+    panel.background = element_rect(fill = "white", colour = NA),
+    axis.text.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "top"
+  ) +
+  labs(
+    title = "Expected Behavioral Response to Posts, by Condition",
+    subtitle = "After reading the posts, to what extent would you be likely to do the following?",
+    x = "Expected behavioral response",
+    y = "Participant response",
+    colour = "Condition"
+  )
+
+ggsave(
+  "Behavioural_plot.png",
+  plot = Behavioural_plot,
+  device = "png",
+  dpi = 300,
+  width = 8,
+  height = 6,
+  bg = "white"
+)
+
+Behavioural_plot
+
+
+
+```
+
+#### Representativeness
+
+```{r}
+Representative_Responses <- data[, c("Representative1", "Representative2", "Representative3", "Condition")]
+
+Representative_Responses_long <- pivot_longer(Representative_Responses, cols = starts_with("Representative"), names_to = "Variable", values_to = "Value")
+
+Representative_Responses_means <- summarySE(data = Representative_Responses_long, measurevar = "Value", groupvars = c("Variable","Condition"), na.rm = TRUE, conf.interval = 0.95, .drop = TRUE)
+
+Representative_Responses_means$Variable <- recode(
+  Representative_Responses_means$Variable,
+  "Representative1" = "Social media",
+  "Representative2" = "Newspapers and television",
+  "Representative3" = "Health professionals"
+)
+```
+
+```{r}
+Representative_plot <- ggplot(Representative_Responses_means) +
+  aes(x = Variable, y = Value, colour = Condition) +
+  geom_point(shape = "circle", size = 3L) +
+  geom_errorbar(
+    aes(ymin = Value - ci, ymax = Value + ci),
+    width = 0.2,
+    position = position_dodge(0.1)
+  ) +
+  scale_y_continuous(
+    position = "right",
+    limits = c(1, 5),
+    breaks = 1:5
+  ) +
+  coord_flip() +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 5, label = "Strongly\nagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 4, label = "Agree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 3, label = "Neither"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 2, label = "Disagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 1, label = "Strongly\ndisagree"), inherit.aes = FALSE, size = 3) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "white", colour = NA),
+    panel.background = element_rect(fill = "white", colour = NA),
+    axis.text.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "top"
+  ) +
+  labs(
+    title = "Perceived Representativeness of Posts, by Condition",
+    subtitle = "To what extent do you agree the posts are representative of...",
+    x = "Information source",
+    y = "Participant response",
+    colour = "Condition"
+  )
+
+ggsave(
+  "Representative_plot.png",
+  plot = Representative_plot,
+  device = "png",
+  dpi = 300,
+  width = 8,
+  height = 3,
+  bg = "white"
+)
+
+Representative_plot
+
+```
+
+
+#### Perceptions of Posts
+
+```{r}
+Post_Perceptions <- data[, c("Agreements_1", "Agreements_2", "Agreements_3", "Condition")]
+
+Post_Perceptions_long <- pivot_longer(Post_Perceptions, cols = starts_with("Agreements_"), names_to = "Variable", values_to = "Value")
+
+Post_Perceptions_means <- summarySE(data = Post_Perceptions_long, measurevar = "Value", groupvars = c("Variable","Condition"), na.rm = TRUE, conf.interval = 0.95, .drop = TRUE)
+
+Post_Perceptions_means$Variable <- recode(
+  Post_Perceptions_means$Variable,
+  "Agreements_1" = "I liked the posts",
+  "Agreements_2" = "I found the posts credible",
+  "Agreements_3" = "I trust the posts"
+)
+```
+
+```{r}
+Post_Perceptions_plot <- ggplot(Post_Perceptions_means) +
+  aes(x = Variable, y = Value, colour = Condition) +
+  geom_point(shape = "circle", size = 3L) +
+  geom_errorbar(
+    aes(ymin = Value - ci, ymax = Value + ci),
+    width = 0.2,
+    position = position_dodge(0.1)
+  ) +
+  scale_y_continuous(
+    position = "right",
+    limits = c(1, 5),
+    breaks = 1:5
+  ) +
+  coord_flip() +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 5, label = "Strongly\nagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 4, label = "Agree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 3, label = "Neither"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.45, y = 2, label = "Disagree"), inherit.aes = FALSE, size = 3) +
+  geom_text(aes(x = length(unique(Variable)) + 0.3, y = 1, label = "Strongly\ndisagree"), inherit.aes = FALSE, size = 3) +
+  theme_minimal() +
+  theme(
+    plot.background = element_rect(fill = "white", colour = NA),
+    panel.background = element_rect(fill = "white", colour = NA),
+    axis.text.x = element_blank(),
+    panel.grid.major.y = element_line(color = "gray", linewidth = 0.5),
+    panel.grid.minor.y = element_blank(),
+    plot.title = element_text(hjust = 0.5),
+    legend.position = "top"
+  ) +
+  labs(
+    title = "Perception of Posts, by Condition",
+    subtitle = "To what extent do you agree with the following...",
+    x = "Perception of posts",
+    y = "Participant response",
+    colour = "Condition"
+  )
+
+ggsave(
+  "Post_Perceptions_plot.png",
+  plot = Post_Perceptions_plot,
+  device = "png",
+  dpi = 300,
+  width = 8,
+  height = 3,
+  bg = "white"
+)
+
+Post_Perceptions_plot
+
+```
+
+
+
+
+# Model 1 - Predicting Affective Responses
+
+```{r}
+#Prepare variables
+data$Condition <- as.factor(relevel(
+  factor(str_trim(data$Condition, side = "both")),
+  ref = "Normal"))
+
+data$Worried <- as.factor(data$Affective_response_1)
+data$Reassured <- as.factor(data$Affective_response_2)
+data$Confused <- as.factor(data$Affective_response_3)
+data$InControl <- as.factor(data$Affective_response_4)
+data$Optimistic <- as.factor(data$Affective_response_5)
+data$Anxious <- as.factor(data$Affective_response_6)
+data$Empowered <- as.factor(data$Agreements_4)
+data$Knowledgeable <- as.factor(data$Agreements_5)
+
+```
+
+
+```{r}
+# Affective response variables
+outcomes <- c("Worried", "Reassured", "Confused", "InControl", "Optimistic", "Anxious", "Empowered", "Knowledgeable")
+
+get_model_results <- function(outcome_var) {
+ 
+  formula <- as.formula(paste(outcome_var, "~ Condition + scale(Age) + scale(Education) + scale(Social.Media)"))
+  
+  # Fit the proportional odds logistic regression
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  
+  # Extract coefficients summary matrix
+  coefs <- coef(summary(model))
+  
+  # Calculate p-values from t values
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  
+  # Add stars for p < 0.01
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  # Dataframe
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  return(results)
+}
+
+# Run the function for all outcomes and bind results together
+Affective_Results <- do.call(rbind, lapply(outcomes, get_model_results))
+
+print(Affective_Results)
+```
+
+# Model 2 - Predicting Behavioural Responses
+```{r}
+# Prepare Behavioural response variables with renamed outcomes
+data$Like <- as.factor(data$Behaviour_response_1)
+data$Share <- as.factor(data$Behaviour_response_2)
+data$Save <- as.factor(data$Behaviour_response_3)
+data$Comment <- as.factor(data$Behaviour_response_4)
+data$Search <- as.factor(data$Behaviour_response_5)
+data$Discuss_w_friends_family <- as.factor(data$Discuss_posts_1)
+data$Discuss_health_professional <- as.factor(data$Discuss_posts_2)
+```
+
+```{r}
+# Define outcome variables
+behaviour_outcomes <- c("Like", "Share", "Save", "Comment", "Search", 
+                        "Discuss_w_friends_family", "Discuss_health_professional")
+
+# Define function to run model and extract results
+get_behaviour_model_results <- function(outcome_var) {
+  
+  formula <- as.formula(paste(outcome_var, "~ Condition + scale(Age) + scale(Education) + scale(Social.Media)"))
+  
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  
+  coefs <- coef(summary(model))
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  return(results)
+}
+
+# Run for all outcomes and combine
+Behaviour_Results <- do.call(rbind, lapply(behaviour_outcomes, get_behaviour_model_results))
+
+# Print results
+print(Behaviour_Results)
+
+```
+
+
+# Model 3 - Representativeness of Posts
+```{r}
+# Prepare representativeness variables
+data$SocialMedia <- as.factor(data$Representative1)
+data$Newspapers_TV <- as.factor(data$Representative2)
+data$Health_Professionals <- as.factor(data$Representative3)
+
+```
+
+```{r}
+# Representativeness outcome variables
+representative_outcomes <- c("SocialMedia", "Newspapers_TV", "Health_Professionals")
+
+get_representative_results <- function(outcome_var) {
+  
+  formula <- as.formula(paste(outcome_var, "~ Condition + scale(Age) + scale(Education) + scale(Social.Media)"))
+  
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  
+  coefs <- coef(summary(model))
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  return(results)
+}
+
+# Run and bind all models
+Representativeness_Results <- do.call(rbind, lapply(representative_outcomes, get_representative_results))
+
+print(Representativeness_Results)
+
+```
+
+# Model 4 - Perceptions of Posts
+
+```{r}
+# Prepare perceptions variables
+data$Liked_Post <- as.factor(data$Agreements_1)
+data$Found_Credible <- as.factor(data$Agreements_2)
+data$Trusted_Posts <- as.factor(data$Agreements_3)
+
+```
+
+```{r}
+# Perceptions outcome variables
+perception_outcomes <- c("Liked_Post", "Found_Credible", "Trusted_Posts")
+
+get_perception_results <- function(outcome_var) {
+  
+  formula <- as.formula(paste(outcome_var, "~ Condition + scale(Age) + scale(Education) + scale(Social.Media)"))
+  
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  
+  coefs <- coef(summary(model))
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  return(results)
+}
+
+# Run and bind all models
+Perception_Results <- do.call(rbind, lapply(perception_outcomes, get_perception_results))
+
+print(Perception_Results)
+
+```
+
+
+
+# Demographic effects
+
+#### Affective responses
+```{r}
+# Affective response variables
+outcomes <- c("Worried", "Reassured", "Confused", "InControl", 
+              "Optimistic", "Anxious", "Empowered", "Knowledgeable")
+
+data$Meno <- as.factor(data$Screening...Meno)
+
+# Function to run models without Condition and filter for predictors only
+get_demographics_only_results <- function(outcome_var) {
+  
+  formula <- as.formula(paste(outcome_var, "~ scale(Age) + scale(Education) + scale(Social.Media) + Meno"))
+  
+  # Fit proportional odds logistic regression
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  print(rownames(coef(summary(model))))
+
+  # Extract coefficients summary matrix
+  coefs <- coef(summary(model))
+  
+  # Calculate p-values from t values
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  
+  # Add stars for p < 0.01
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  # Format results
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  # Filter to only include predictor terms (exclude thresholds)
+  results <- results[grepl("scale\\(|Meno", results$Term), ]  
+  return(results)
+}
+
+# Run function for all affective outcomes
+Affective_Demographics_Only <- do.call(rbind, lapply(outcomes, get_demographics_only_results))
+
+# View or export
+print(Affective_Demographics_Only)
+# write.csv(Affective_Demographics_Only, "affective_demographics_filtered.csv", row.names = FALSE)
+
+
+```
+
+
+#### Behavioural responses
+
+```{r}
+# Behavioural response variables
+behaviour_outcomes <- c("Like", "Share", "Save", "Comment", "Search", 
+                        "Discuss_w_friends_family", "Discuss_health_professional")
+
+# Function to run models without Condition and filter for predictors only
+get_behaviour_demographics_only_results <- function(outcome_var) {
+  
+  formula <- as.formula(paste(outcome_var, "~ scale(Age) + scale(Education) + scale(Social.Media) + Meno"))
+  
+  # Fit proportional odds logistic regression
+  model <- polr(formula, method = "logistic", Hess = TRUE, data = data)
+  
+  # Extract coefficients summary matrix
+  coefs <- coef(summary(model))
+  
+  # Calculate p-values from t values
+  p_vals <- 2 * (1 - pnorm(abs(coefs[, "t value"])))
+  
+  # Add stars for p < 0.01
+  stars <- ifelse(p_vals < 0.01, "*", "")
+  
+  # Format results
+  results <- data.frame(
+    Outcome = outcome_var,
+    Term = rownames(coefs),
+    Value = coefs[, "Value"],
+    Std_Error = coefs[, "Std. Error"],
+    t_value = coefs[, "t value"],
+    p_value = round(p_vals, 10),
+    Signif = stars,
+    row.names = NULL
+  )
+  
+  # Filter to only include predictor terms (exclude thresholds)
+  results <- results[grepl("scale\\(|Meno", results$Term), ]  
+
+  return(results)
+}
+
+# Run function for all behavioural outcomes
+Behaviour_Demographics_Only <- do.call(rbind, lapply(behaviour_outcomes, get_behaviour_demographics_only_results))
+
+# View or export
+print(Behaviour_Demographics_Only)
+# write.csv(Behaviour_Demographics_Only, "behaviour_demographics_filtered.csv", row.names = FALSE)
+
+```
+
+
+# Session information
+```{r}
+sessionInfo()
+```
