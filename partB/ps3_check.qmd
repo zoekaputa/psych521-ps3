@@ -1,0 +1,208 @@
+---
+title: "Reproducibility check: Osborne et al. (2026)"
+author: "Zoe Kaputa"
+date: today
+format:
+  html:
+    toc: true
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+## Article
+
+- Citation and DOI: Osborne AK, Brown RD, Sillence E. Effects of Social Media Narratives on Affective and Behavioral Responses to Menopause Content: Randomized Online Experimental Study. *JMIR Formative Research*, 2026;10:e85788. doi:[10.2196/85788](https://doi.org/10.2196/85788)
+- Data/materials repository URL: OSF project `gnb2e` (<https://osf.io/gnb2e/>) — files `Menopause_Social_Media_Study_Data.csv` and `Menopause_Social_Media_Study.Rmd`
+- Part A (known case) or Part B (a classmate's project paper): Part B
+- Part B only: the classmate's project repo, and which target outcome is its key effect: https://github.com/psych251/osborne2026, key effect of difference in worry levels between conditions
+
+## Target outcomes
+
+Written **before** opening the data. Quote each from the paper. In Part B, one of these must
+be the project's key effect.
+
+| # | Target outcome (quoted) | Paper value(s) |
+|---|---|---|
+| 1 | "Participants who viewed distress-framed posts reported greater levels of worry" | β=0.910, SE=0.170, P<.001 |
+| 2 | "Participants who viewed distress-framed posts reported greater levels of ... confusion" | β=0.818,  SE=0.170, P<.001 |
+| 3 | "Participants who viewed distress-framed posts reported greater levels of ... anxiety" | β=0.817, SE=0.168, P<.001 |
+| 4 | "Participants who viewed distress-framed posts reported ... lower levels of reassurance" | β=−0.970, SE=0.167, P<.001 |
+| 5 | "Participants who viewed distress-framed posts reported ... lower levels of ... optimism" | β=−0.708, SE=0.165, P<.001 |
+| 6 | "Participants who viewed distress-framed posts reported ... lower levels of ... empowerment" | β=−0.540, SE=0.162, P<.001 |
+| 7 | "Distress framing also increased perceived knowledge of menopause" | β=.564, SE=0.163, P<.001 |
+
+## Materials inventory
+
+| Item | Available? | Notes |
+|---|---|---|
+| Raw data | Yes | One spreadsheet with all data available on OSF |
+| Processed data | No | |
+| Codebook / variable descriptions | No | |
+| Analysis code | Yes | The authors' full R script available on OSF |
+| Preregistration | No | |
+
+## Reproduction
+
+The agent's work, under your direction. Keep all code visible.
+
+All code below follows the authors' own script (`gnb2e-osfstorage-archive/Menopause_Social_Media_Study.Rmd`,
+sections "Set up and clean", "Potential outliers", "Tidy data", and "Model 1 - Predicting Affective Responses").
+The authors' descriptive-statistics and plotting sections (which need `Rmisc`, `psych`, `rmarkdown`) are not
+needed for the target outcomes and are omitted; nothing in them modifies `data`.
+
+```{r}
+#| label: setup
+library(tidyverse)
+library(MASS)  # polr(); note MASS masks dplyr::select, so select() is called as dplyr::select below
+```
+
+```{r}
+#| label: load
+data <- read.csv("gnb2e-osfstorage-archive/Menopause_Social_Media_Study_Data.csv")
+
+# Remove the two Qualtrics header rows (question wording and import IDs), as in the authors' script
+data <- data[-c(1:2), ]
+
+# Convert everything except the ID and condition columns to numeric
+cols_to_convert <- setdiff(names(data), c("Participant_ID", "FL_21_DO"))
+data[cols_to_convert] <- lapply(data[cols_to_convert], function(x) as.numeric(as.character(x)))
+
+nrow(data)  # 749 rows in the shared file
+```
+
+```{r}
+#| label: preprocess
+# Inclusion criteria (already applied before sharing; a no-op here)
+data <- subset(data, Finished != 0 & Age >= 40)
+
+# Condition factor, Normal = reference
+names(data)[names(data) == "FL_21_DO"] <- "Condition"
+data$Condition <- relevel(factor(str_trim(data$Condition, side = "both")), ref = "Normal")
+
+# Exclusions: >20 years post-16 education, or survey completed in under 150 s
+cat(sum(data$Education > 20, na.rm = TRUE), "participants with >20 years post-16 education\n")
+cat(sum(data$Duration..in.seconds. < 150, na.rm = TRUE), "participants under 150 s\n")
+data <- data[data$Education <= 20, ]
+data <- data[data$Duration..in.seconds. >= 150, ]
+
+table(data$Condition)
+nrow(data)
+
+# Each condition's responses are in separate N./D./T. columns; combine them
+combine <- function(v) coalesce(data[[paste0("N.", v)]], data[[paste0("D.", v)]], data[[paste0("T.", v)]])
+for (v in c(paste0("Affective_response_", 1:6), "Agreements_4", "Agreements_5")) {
+  data[[v]] <- combine(v)
+}
+
+# Outcomes as ordered factors for polr (the authors use as.factor; polr treats levels as ordered)
+outcome_map <- c(
+  Worried       = "Affective_response_1",
+  Reassured     = "Affective_response_2",
+  Confused      = "Affective_response_3",
+  InControl     = "Affective_response_4",
+  Optimistic    = "Affective_response_5",
+  Anxious       = "Affective_response_6",
+  Empowered     = "Agreements_4",
+  Knowledgeable = "Agreements_5"
+)
+for (o in names(outcome_map)) data[[o]] <- as.factor(data[[outcome_map[o]]])
+```
+
+```{r}
+#| label: analysis
+# Proportional-odds logistic regression for each affective outcome:
+# outcome ~ Condition + scale(Age) + scale(Education) + scale(Social.Media)
+# p-values from the normal approximation to the t statistic, as in the authors' script
+fit_one <- function(outcome) {
+  f <- as.formula(paste(outcome, "~ Condition + scale(Age) + scale(Education) + scale(Social.Media)"))
+  m <- polr(f, method = "logistic", Hess = TRUE, data = data)
+  cf <- coef(summary(m))
+  tibble(
+    Outcome = outcome,
+    Term    = rownames(cf),
+    beta    = cf[, "Value"],
+    SE      = cf[, "Std. Error"],
+    t       = cf[, "t value"],
+    p       = 2 * (1 - pnorm(abs(cf[, "t value"])))
+  )
+}
+
+Affective_Results <- map_dfr(names(outcome_map), fit_one)
+
+# Distress vs Normal contrasts for all affective outcomes
+Affective_Results |>
+  filter(Term == "ConditionDistress") |>
+  mutate(across(c(beta, SE, t), \(x) round(x, 3)), p = signif(p, 3))
+```
+
+```{r}
+#| label: compare-to-paper
+paper <- tribble(
+  ~num, ~Outcome,        ~paper_beta, ~paper_SE,
+  1,    "Worried",        0.910,      0.170,
+  2,    "Confused",       0.818,      0.170,
+  3,    "Anxious",        0.817,      0.168,
+  4,    "Reassured",     -0.970,      0.167,
+  5,    "Optimistic",    -0.708,      0.165,
+  6,    "Empowered",     -0.540,      0.162,
+  7,    "Knowledgeable",  0.564,      0.163
+)
+
+paper |>
+  left_join(filter(Affective_Results, Term == "ConditionDistress"), by = "Outcome") |>
+  transmute(
+    num, Outcome, paper_beta, repro_beta = round(beta, 3),
+    paper_SE, repro_SE = round(SE, 3),
+    repro_p = formatC(p, format = "e", digits = 2),
+    match = paper_beta == round(beta, 3) & paper_SE == round(SE, 3) & p < .001
+  ) |>
+  knitr::kable()
+```
+
+**Agent's summary:** Running the authors' script on the shared data (n = 737 after exclusions: 248 Normal,
+241 Distress, 248 Transformative) reproduces all seven target coefficients and standard errors to three decimals,
+and all seven p-values are < .001 as reported. No deviations from the authors' code were required.
+
+## Checker's verdict
+
+Filled in by you, not the agent.
+
+| # | Paper value | Reproduced value | Verdict (exact / minor / major / not reproducible) | Reason for discrepancy |
+|---|---|---|---|---|
+| 1 | 0.910	| 0.910 | exact | N/A |
+| 2 | 0.818	| 0.818	| exact |  N/A |
+| 3 | 0.817	| 0.817	| exact |  N/A |
+| 4 | -0.970 | -0.970 | exact |  N/A |
+| 5 | -0.708 | -0.708 | exact |  N/A |
+| 6 | -0.540 | -0.540 | exact |  N/A |
+| 7 | 0.564 | 0.564 | exact |  N/A |
+
+Agent's own claim about success, and whether it was right:
+
+The agent claimed it was able to able to fully reproduce the key statistics to 
+three decimal places. This claim seems to be true, the agent followed the
+provided R script using the provided data.
+
+## Time
+
+- Your time (hours): 0.5 hours
+- Agent wall-clock time (hours): 0.1 hours
+- Stopped at the 4-hour cap? What remained:
+
+## Assessment
+
+Is the primary result analytically reproducible? What would have made this take 30 minutes?
+
+Yes, the primary result was exactly reproducable. It took around 30 minutes. I can't think of 
+anything the authors could have done to make this exercise faster.
+
+## AI documentation
+
+- Agent and interface (e.g., Claude Code, Codex CLI, Cursor): Claude Code (VS Code extension)
+- Model and version, if the tool reports it: Claude Opus 5.5 (`claude-opus-5-5`)
+- Context you gave it (files, instructions, any context file): The original PDF and the files included in the authors' OSF project
+- Number of times you intervened, and the most important intervention: 0
+- Transcript: link to the exported transcript in your repo (`transcripts/`). If your tool
+  cannot export one, paste your prompts in order here instead.
