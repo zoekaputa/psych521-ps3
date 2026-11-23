@@ -204,5 +204,4 @@ anything the authors could have done to make this exercise faster.
 - Model and version, if the tool reports it: Claude Opus 5.5 (`claude-opus-5-5`)
 - Context you gave it (files, instructions, any context file): The original PDF and the files included in the authors' OSF project
 - Number of times you intervened, and the most important intervention: 0
-- Transcript: link to the exported transcript in your repo (`transcripts/`). If your tool
-  cannot export one, paste your prompts in order here instead.
+- Transcript: https://github.com/zoekaputa/psych521-ps3/blob/main/partB/ps3_social-media-narrative_claude_transcript.md

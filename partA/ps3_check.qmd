@@ -276,5 +276,4 @@ Yes, it is reproducable. This exercise took me and the agent a combined 30 minut
   fig2.png, reproducibilityReport.Rmd, data/), `ps3_check_template.qmd`, and the instruction to
   reproduce the target outcomes and fill out a copy of the template, leaving the verdict to you.
 - Number of times you intervened, and the most important intervention: 1, asking the agent to iterate on its decisions
-- Transcript: link to the exported transcript in your repo (`transcripts/`). If your tool
-  cannot export one, paste your prompts in order here instead.
+- Transcript: https://github.com/zoekaputa/psych521-ps3/blob/main/partA/ps3_GroupB_Choice3_claude_transcript.md 
